@@ -1,0 +1,16 @@
+CREATE OR REPLACE FUNCTION match.mns(
+schema_name varchar)
+returns integer as $body$
+DECLARE
+SQLQuery text;
+from_count integer;
+BEGIN
+SQLQuery='SELECT COUNT(*) FROM information_schema.tables WHERE table_schema ='''||schema_name||'''';
+execute SQLQuery into from_count;
+raise info 'schema_table_count --------> %',from_count;
+--raise info 'schema_table_count %',SQLQuery;
+RETURN 1;
+END
+$body$ LANGUAGE plpgsql;
+
+select match.mns('match')
